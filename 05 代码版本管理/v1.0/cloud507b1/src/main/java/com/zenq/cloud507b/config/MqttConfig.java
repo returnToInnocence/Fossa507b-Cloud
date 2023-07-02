@@ -7,5 +7,4 @@ public class MqttConfig {
     public String username = "emqx";
     public String password = "public";
     public String clientid = "publish_client";
-
 }
