@@ -22,8 +22,6 @@ public class CardqueueController {
     CardqueueService cardqueueService;
     @Autowired
     private MailService mailService;
-    @Autowired
-    private TemplateEngine templateEngine;
 
     @GetMapping("/api/cardqueue")
     public List<Cardqueue> getListCardqueue(){
@@ -47,7 +45,7 @@ public class CardqueueController {
             int cardqueuecount = cardqueueService.listCardqueueCount();
             System.out.println(cardqueuecount);
             if (cardqueuecount >= 4) {
-                cardqueuecount = cardqueuecount + 1
+                cardqueuecount = cardqueuecount + 1;
                 String content = "目前有" + cardqueuecount + "个同学需要录卡";
                 mailService.sendSimpleMail("3208315685@qq.com", "发送邮件测试", content);
                 return new SuccessMessage<Boolean>("录卡排队成功，发送邮件成功", cardqueueService.addCardqueue(userid)).getMessage();

@@ -1,0 +1,15 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    username: cloud507b
+    password: geek507b
+    url: jdbc:mysql://124.222.87.124:3306/cloud507b?useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: 1019766824@qq.com
+    password: pxtfguvvtpxgbcgj
+mybatis-plus:
+  mapper-locations: classpath:mybatis/mapper/*.xml
