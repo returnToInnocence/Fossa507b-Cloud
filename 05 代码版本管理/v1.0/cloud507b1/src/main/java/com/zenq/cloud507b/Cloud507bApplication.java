@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Cloud507bApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(Cloud507bApplication.class, args);
     }
 
