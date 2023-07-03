@@ -1,10 +1,6 @@
 package com.zenq.cloud507b.controller;
 
-import com.zenq.cloud507b.config.MqttConfig;
 import com.zenq.cloud507b.service.MqttEnvService;
-import com.zenq.cloud507b.util.MqttUtil;
-import org.eclipse.paho.client.mqttv3.*;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

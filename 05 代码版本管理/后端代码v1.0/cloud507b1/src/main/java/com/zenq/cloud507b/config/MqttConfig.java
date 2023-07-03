@@ -3,10 +3,6 @@ package com.zenq.cloud507b.config;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 @Component
 public class MqttConfig {
     public static String broker = "tcp://124.222.87.124:1883";
