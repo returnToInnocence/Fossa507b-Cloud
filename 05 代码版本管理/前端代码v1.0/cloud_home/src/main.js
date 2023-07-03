@@ -6,6 +6,8 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import axios from "axios";
+import VueAxios from 'vue-axios'
+
 
 import ElementPlus from 'element-plus';//为vue3项目特别更新的版本
 import 'element-plus/dist/index.css';
