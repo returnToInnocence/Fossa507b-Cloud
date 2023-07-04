@@ -13,26 +13,27 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 public class SeatController {
     @Autowired
     SeatService seatService;
 
-    @CrossOrigin(origins = "http://localhost:5173")
+
     @GetMapping("/api/getseat")
     public Object selectseat(HttpServletRequest req){
         try {
             System.out.println("获取座位");
             //System.out.println(seatService.seatList());
-            return new SuccessMessage<List<Seat>>("获取座位信息成功",seatService.seatList()).getMessage();
+            List<Seat> seatList = seatService.seatList();
+            List<List<Seat>> rowColumnList = seatService.convertToRowsColumns(seatList, 5, 7);
+            return new SuccessMessage<List<List<Seat>>>("获取座位信息成功",rowColumnList).getMessage();
         }catch (Exception e){
             System.out.println(e);
             return new ErrorMessage("获取座位信息失败").getMessage();
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/api/updateseat")
     public Object updateseat(HttpServletRequest req){
         //前端点击座位进行信息更新（我要使用这个座位了）
@@ -58,7 +59,6 @@ public class SeatController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/api/getseatrate")
     public Object getseatRate(HttpServletRequest req){
         try {

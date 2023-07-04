@@ -17,8 +17,18 @@ public class MqttUtil {
         options.setConnectionTimeout(60);
         options.setKeepAliveInterval(60);
         MqttConfig.client.setCallback(new MqttCallback() {
+            //实现重连机制
+            @Override
             public void connectionLost(Throwable cause) {
 //                System.out.println("connectionLost: " + cause.getMessage());
+                System.out.println("连接丢失，原因：" + cause.getMessage());
+                // 在此处进行重连操作
+                try {
+                    MqttConfig.client.connect(options);
+                    // 重新订阅主题等操作
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
             }
             public void messageArrived(String topic, MqttMessage message) {
 //                System.out.println("接收到返回数据~" + "\nQos: " + message.getQos()

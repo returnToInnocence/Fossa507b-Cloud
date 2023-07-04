@@ -5,6 +5,7 @@ import com.zenq.cloud507b.po.Seat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,5 +36,23 @@ public class SeatService {
 
     public Object setSeatUsedValue(int sum, String date) {
         return seatMapper.setSeatUsedValue(sum, date);
+    }
+
+    public static <T> List<List<T>> convertToRowsColumns(List<T> originalList, int rows, int columns) {
+        if (originalList.size() != rows * columns) {
+            throw new IllegalArgumentException("原始List的大小必须等于指定的行数乘以列数");
+        }
+
+        List<List<T>> rowColumnList = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            List<T> row = new ArrayList<>();
+            for (int j = 0; j < columns; j++) {
+                int index = i * columns + j;
+                row.add(originalList.get(index));
+            }
+            rowColumnList.add(row);
+        }
+
+        return rowColumnList;
     }
 }
