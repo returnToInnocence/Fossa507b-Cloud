@@ -1,0 +1,28 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    username: cloud507b
+    password: geek507b
+    url: jdbc:mysql://124.222.87.124:3306/cloud507b?useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: 1019766824@qq.com
+    password: pxtfguvvtpxgbcgj
+#tengxun:
+#  cos:
+#    SecretId: AKIDqUs67rKXT8WdV6QTFl0zkFUgbFelcEaf
+#    SecretKey: qPikVzHI2WjgMltkLfiV1GEySfbGfneE
+#    region: ap-shanghai
+#    bucketName: chenxi-1305165427
+#    url: XXX
+#    path: XXX/XXX/ # 上传文件夹路径前缀
+#    policy_expire: 300 # 签名有效期(S)
+#    code_format: utf-8
+#mybatis-plus:
+#  mapper-locations: classpath:mybatis/mapper/*.xml
+
+#logging:
+#  config: classpath:log4j2.xml
