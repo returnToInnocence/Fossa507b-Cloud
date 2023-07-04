@@ -24,11 +24,21 @@ const emit = defineEmits(['update:checked', 'change'])
 function onSwitch() {
   emit('update:checked', !checked.value)
   emit('change', !checked.value)
-  axios.get('/user?ID=12345').then(function (response) {
-    console.log(response);
-  }).catch(function (error) {
-    console.log(error);
-  });
+
+  if (checked.value == false) {
+    axios.get('http://localhost:8080/api/mqttLightOpen').then(function (response) {
+      console.log(response);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  } else {
+    axios.get('http://localhost:8080/api/mqttLightClose').then(function (response) {
+      console.log(response);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
 }
 </script>
 <template>
