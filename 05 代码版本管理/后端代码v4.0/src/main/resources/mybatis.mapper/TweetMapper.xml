@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zenq.cloud507b.mapper.TweetMapper">
+    <!--   resultType  返回值类型   -->
+    <select id="selectTweetList" resultType="com.zenq.cloud507b.po.Tweet">
+        select * from tweet
+    </select>
+
+<!--    <select id="updateTweetFollowersById" resultType="com.zenq.cloud507b.po.Tweet">-->
+<!--        select * from tweet-->
+<!--    </select>-->
+
+    <insert id="insertTweet">
+        insert into tweet(id, title, content, userid, time, img, follower, type)
+        values (#{id}, #{title}, #{content}, #{userid}, #{time}, #{img}, #{follower}, #{type})
+    </insert>
+
+    <select id="deleteTweet" resultType="com.zenq.cloud507b.po.Tweet">
+        delete from tweet
+        where id = #{id}
+    </select>
+
+</mapper>

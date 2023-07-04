@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
         <nut-navbar title="虚拟社区" class="header" v-if="navShow">
             <template #left>
@@ -208,4 +208,4 @@
         overflow: hidden;
     }
     </style>
-    
+     -->

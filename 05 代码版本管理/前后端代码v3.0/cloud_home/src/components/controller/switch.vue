@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import axios from 'axios';
 interface Props {
   checkedInfo?: string // 选中时的内容
   uncheckedInfo?: string // 未选中时的内容
@@ -20,15 +21,22 @@ watch(
   }
 )
 const emit = defineEmits(['update:checked', 'change'])
-function onSwitch () {
+function onSwitch() {
   emit('update:checked', !checked.value)
   emit('change', !checked.value)
+  axios.get('/user?ID=12345').then(function (response) {
+    console.log(response);
+  }).catch(function (error) {
+    console.log(error);
+  });
 }
 </script>
 <template>
   <div class="m-switch-wrap">
-    <div @click="disabled ? () => false : onSwitch()" :class="['m-switch', { 'switch-checked': checked, 'disabled': disabled }]">
-      <div :class="['u-switch-inner', checked ? 'inner-checked' : 'inner-unchecked' ]">{{ checked ? checkedInfo : uncheckedInfo }}</div>
+    <div @click="disabled ? () => false : onSwitch()"
+      :class="['m-switch', { 'switch-checked': checked, 'disabled': disabled }]">
+      <div :class="['u-switch-inner', checked ? 'inner-checked' : 'inner-unchecked']">{{ checked ? checkedInfo :
+        uncheckedInfo }}</div>
       <div :class="['u-node', { 'node-checked': checked }]">
         <slot name="node" :checked="checked"></slot>
       </div>
@@ -96,7 +104,7 @@ function onSwitch () {
 
 .switch-checked {
   /* 这里的 @themeColor 是 Less 中的变量，你可以将其替换为实际的颜色值 */
-  background:rgb(81, 81, 236);
+  background: rgb(81, 81, 236);
 }
 
 .disabled {
@@ -107,5 +115,4 @@ function onSwitch () {
 .disabled .u-node {
   cursor: not-allowed;
 }
-
 </style>

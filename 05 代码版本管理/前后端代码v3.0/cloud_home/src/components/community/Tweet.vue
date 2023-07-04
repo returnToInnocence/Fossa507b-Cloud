@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 <div>
     <nut-row>
         <nut-col :span="4">
@@ -177,4 +177,4 @@ export default {
 .h5px {
     height: 5px;
 }
-</style>
+</style> -->
