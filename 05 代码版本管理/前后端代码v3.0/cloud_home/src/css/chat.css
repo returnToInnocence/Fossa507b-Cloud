@@ -1,0 +1,177 @@
+/* Chat页面 */
+.chat-page {
+  animation: fade-in 1s;
+  background: linear-gradient(to bottom, #3457D4, #F869D5);
+}
+
+/* 用户列表面板 */
+.user-panel {
+  position: relative;
+  width: calc(20% - 20px);
+  height: calc(100% - 20px);
+  background-color: #ffffff;
+  border-radius: 16px;
+  margin-right: 20px;
+}
+
+/* 用户数量样式 */
+.user-count {
+  width: 100%;
+  height: 64px;
+  border-bottom: 2px solid #F869D5;
+}
+
+/* 用户面板 */
+.user-list {
+  width: 100%;
+  height: calc(100% - 104px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 用户 */
+.user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* 用户图片 */
+.user-image {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #F869D5;
+  border-radius: 64px;
+}
+
+/* 用户名 */
+.user-name {
+  font-size: 24px;
+  margin-left: 16px;
+}
+
+/* 聊天框 */
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  width: calc(80% - 20px);
+  height: calc(100% - 20px);
+  background-color: #ffffff;
+  border-radius: 16px;
+  margin-left: 20px;
+}
+
+/* 聊天室头部 */
+.chat-header {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 20px);
+  height: 5%;
+  margin-left: 16px;
+  border-bottom: 2px solid #cccccc;
+  margin-bottom: 8px;
+}
+
+/* 聊天室信息框 */
+.chat-messages {
+  width: calc(100% - 34px);
+  height: 80%;
+  border-radius: 4px 4px 0 0;
+  background-color: #f0f0f0;
+  border: 1px solid #cccccc;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* 用户信息 */
+.user-info {
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+/* 用户头像 */
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  margin-right: 8px;
+  border: 2px solid #ffffff;
+}
+
+/* 用户名 */
+.user-name {
+  text-align: left;
+  margin-bottom: 8px;
+  height: 24px;
+}
+  
+/* 时间 */
+.time {
+  padding-left: 16px;
+  color: #888888;
+}
+
+/* 文本样式 */
+.message {
+  float: left;
+  text-align: left;
+  color: #ffffff;
+  background-color: #3457D4;
+  padding: 8px 16px;
+  border-radius: 4px 4px 0 0;
+  selected-text-background-color: #ADD8E6;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+}
+
+/* 用户文本样式 */
+.user-message {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+/* 聊天室输入框 */
+.chat-input {
+  position: relative;
+  width: 100%;
+  height: 15%;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+}
+
+/* 输入框 */
+.input-field {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  font-size: 24px;
+}
+
+/* 发送按钮 */
+.send-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 12px 24px;
+  border-radius: 0 0 4px 4px;
+}
+
+/* 用户列表滚动条 */
+.user-list::-webkit-scrollbar,
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* 用户列表滚动条滑块 */
+.user-list::-webkit-scrollbar-thumb,
+.chat-messages::-webkit-scrollbar-thumb {
+  background-color: #F869D5;
+}
+
+/* 用户列表滚动条背景 */
+.user-list::-webkit-scrollbar-track,
+.chat-messages::-webkit-scrollbar-track {
+  background-color: #cccccc;
+}

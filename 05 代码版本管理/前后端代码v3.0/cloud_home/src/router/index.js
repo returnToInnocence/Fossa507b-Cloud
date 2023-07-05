@@ -64,9 +64,9 @@ const router = createRouter({
           component:()=>import('@/components/community/chat.vue')
         },
         {
-          path:'homepost',
-          name:'community-homepost',
-          component:()=>import('@/components/community/homepost.vue')
+          path:'helloName',
+          name:'community-helloName',
+          component:()=>import('@/components/community/nameChat.vue')
         },
         //用户控制区
         {
@@ -74,6 +74,7 @@ const router = createRouter({
           name:'controller-usercontroller',
           component:()=>import('@/components/controller/usercontroller.vue')
         },
+        
       ]
     }
 

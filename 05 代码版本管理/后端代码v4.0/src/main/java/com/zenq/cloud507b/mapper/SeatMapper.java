@@ -22,8 +22,8 @@ public interface SeatMapper {
     @Select("select seatuserguest from seat where seatid = #{seatid}")
     public String selectGuestbyID(@Param("seatid") String seatid);
 
-    @Update("update seat set seatstatus = #{seatstatus}, set seatuserguest = #{seatuserguest}")
-    public List<Seat> updateSeat(@Param("seatstatus") String seatstatus, @Param("seatuserguest") String seatuserguest);
+    @Update("update seat set seatstatus = #{status}, seatuserguest = #{guest} where seatid = #{id}" )
+    public int updateSeat(@Param("status") String status, @Param("guest") String guest, @Param("id") String id);
 
     @Update("update seatUsedTime set value = #{value} where date = #{date}")
     public Object setSeatUsedValue(@Param("value") Integer value, @Param("date") String date);

@@ -17,8 +17,8 @@ public class SeatService {
         return seatMapper.selectListSeat();
     }
 
-    public List<Seat> updateSeat(String seatstatus, String seatuserguest){
-        return seatMapper.updateSeat(seatstatus, seatuserguest);
+    public int updateSeat(String seatstatus, String seatuserguest, String seatid){
+        return seatMapper.updateSeat(seatstatus, seatuserguest, seatid);
     }
 
     public String selectStatusbyid(String seatid){

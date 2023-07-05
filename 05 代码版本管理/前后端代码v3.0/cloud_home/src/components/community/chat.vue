@@ -1,151 +1,184 @@
 <template>
-    <div id="app">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">当前登录用户</h3>
-              </div>
-              <div class="panel-body">
-                <div class="list-group">
-                  <a href="#" class="list-group-item">你好，<span id="user">{{ user }}</span></a>
-                  <a href="logout" class="list-group-item">退出</a>
+    <div class="chat">
+        <div class="list-pane">
+            <div class="user-pane">
+                <div class="user-count">
+                    <h2>当前在线人数：{{ userCount }}</h2>
                 </div>
-              </div>
-            </div>
-            <div class="panel panel-primary" id="online">
-              <div class="panel-heading">
-                <h3 class="panel-title">当前在线的其他用户</h3>
-              </div>
-              <div class="panel-body">
-                <div class="list-group" id="users">
-                  <a v-for="onlineUser in onlineUsers" :key="onlineUser" href="#" class="list-group-item">{{ onlineUser }}</a>
+                <div class="user-list">
+                    <div class="user" v-for="user in userList" :key="user">
+                        <el-image class="user-img" src="https://returntoinnocence.github.io/img/logo.png"></el-image>
+                        <p class="username">{{ user }}</p>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">群发系统广播</h3>
-              </div>
-              <div class="panel-body">
-                <input type="text" class="form-control" v-model="broadcastMessage" /><br />
-                <button @click="sendBroadcast" type="button" class="btn btn-primary">发送</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-9">
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title" id="talktitle"></h3>
-              </div>
-              <div class="panel-body">
-                <div class="well" id="log-container" style="height: 400px; overflow-y: scroll">
-                  <div v-for="(message, index) in messages" :key="index" class="bg-info">
-                    <label class="text-danger">{{ message.from }}&nbsp;{{ message.date }}</label>
-                    <div class="text-success">{{ message.text }}</div>
-                  </div>
-                </div>
-                <input type="text" v-model="myInfo" class="form-control col-md-12" /><br />
-                <button @click="sendMessage" type="button" class="btn btn-primary">发送</button>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+        <div class="chat-pane">
+            <div class="chat-header">
+                <h2>EZ-Chat - {{ nickname }}</h2>
+            </div>
+            <div class="chat-message" ref="chatHistory">
+                <div class="user-message" v-for="message in messages" :key="message">
+                    <div class="img">
+                        <el-image class="user-img" src="https://returntoinnocence.github.io/img/logo.png"></el-image>
+                    </div>
+                    <div class="message">
+                        <div class="username">
+                            {{ message.name }} <span class="time">{{ message.time }}</span>
+                        </div>
+                        <div class="text user-text" v-if="nickname === message.name">
+                            {{ message.msg }}
+                        </div>
+                        <div class="text" v-if="nickname !== message.name">
+                            {{ message.msg }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-textarea">
+                <el-input v-model="text" class="user-textarea" type="textarea" resize="none"
+                    @keydown.enter="sendButton"></el-input>
+                <el-button type="primary" class="send-button" @click="sendButton">发送</el-button>
+            </div>
+        </div>
     </div>
-  </template>
-  
-  <script>
-  import "../jsLib/bootstrap.min.css"
-  export default {
-    data() {
-      return {
-        user: '',
-        onlineUsers: [],
-        broadcastMessage: '',
-        myInfo: '',
-        messages: []
-      };
-    },
-    mounted() {
-      // 获取当前登录用户
-      this.user = ''; // 根据实际情况获取用户数据
-  
-      // 建立WebSocket连接
-      if ("WebSocket" in window) {
-        const websocket = new WebSocket("ws://localhost:8080/webSocket/" + this.user);
-  
-        websocket.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          if (data.to === 0) {
-            // 上线消息
-            if (data.text !== this.user) {
-              this.onlineUsers.push(data.text);
-              alert(data.text + "上线了");
+</template>
+<script>
+import { ref, onMounted } from "vue";
+import router from "@/router";
+
+export default {
+    setup() {
+        let nickname = ref();
+        let socket;
+
+        onMounted(() => {
+            // 在进入页面后立即执行的代码
+            nickname.value = sessionStorage.getItem("name");
+            // 查询是否设置了昵称
+            if (nickname.value == null) {
+                router.push("/");
+                return;
             }
-          } else if (data.to === -2) {
-            // 下线消息
-            if (data.text !== this.user) {
-              const index = this.onlineUsers.indexOf(data.text);
-              if (index !== -1) {
-                this.onlineUsers.splice(index, 1);
-              }
-              alert(data.text + "下线了");
+
+            // 查询浏览器是否支持 WebSocket
+            if (typeof WebSocket === "undefined") {
+                alert("您的浏览器不支持 WebSocket");
+                router.push("/");
+                return;
             }
-          } else {
-            // 普通消息
-            this.messages.push(data);
-            this.scrollToBottom();
-          }
-        };
-  
-        // 获取在线用户列表
-        fetch("/onlineusers?currentuser=" + this.user)
-          .then(response => response.json())
-          .then(data => {
-            this.onlineUsers = data;
-          });
-      }
-    },
-    methods: {
-      sendBroadcast() {
-        const data = {
-          from: this.user + "发布了全局广播",
-          to: -1,
-          text: this.broadcastMessage
-        };
-        // 发送广播消息
-        // websocket.send(JSON.stringify(data));
-      },
-      sendMessage() {
-        if (!this.myInfo || !this.toUser) {
-          alert("请选择聊天对象");
-          return;
-        }
-        const data = {
-          from: this.user,
-          to: this.toUser,
-          text: this.myInfo
-        };
-        // 发送消息
-        // websocket.send(JSON.stringify(data));
-  
-        this.messages.push({
-          from: "我",
-          date: new Date().format("yyyy-MM-dd hh:mm:ss"),
-          text: this.myInfo
+
+            // 开启 WebSocket 服务
+            let socketHost = "localhost";
+            let socketPort = "8888";
+            let socketUrl =
+                "ws://" + socketHost + ":" + socketPort + "/socket/" + nickname.value;
+            socket = new WebSocket(socketUrl);
+
+            // 连接服务器
+            socket.onopen = () => {
+                console.log("已连接至服务器");
+            };
+
+            // 浏览器接收服务端发送的消息
+            socket.onmessage = (msg) => {
+                let data = JSON.parse(msg.data);
+                console.log("浏览器接受服务器")
+                if (data.userlist) {
+                    // 接收用户列表消息
+                    userList.value = data.userlist;
+                    userCount.value = data.userlist.length;
+                } else {
+                    // 接收消息
+                    messages.value.push(data);
+
+                    // 获取节点
+                    let chatHistory = document.getElementsByClassName("chat-message")[0];
+                    if (chatHistory.scrollHeight >= chatHistory.clientHeight) {
+                        setTimeout(function () {
+                            //设置滚动条到最底部
+                            chatHistory.scrollTop = chatHistory.scrollHeight;
+                        }, 0);
+                    }
+                }
+            };
+            // 关闭服务
+            socket.onclose = () => {
+                console.log("WebSocket 服务已关闭");
+            };
+            // 错误事件
+            socket.onerror = () => {
+                console.log("WebSocket 服务发生错误");
+            };
         });
-        this.myInfo = '';
-        this.scrollToBottom();
-      },
-      scrollToBottom() {
-        this.$nextTick(() => {
-          const div = document.getElementById("log-container");
-          div.scrollTop = div.scrollHeight;
-        });
-      }
+
+        // 日期转换
+        const formatTime = (date) => {
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+            const second = date.getSeconds();
+
+            return (
+                [year, month, day].map(formatNumber).join("-") +
+                " " +
+                [hour, minute, second].map(formatNumber).join(":")
+            );
+        };
+        const formatNumber = (n) => {
+            const s = n.toString();
+            return s[1] ? s : "0" + s;
+        };
+
+        // 用户数量
+        let userCount = ref(0);
+
+        // 用户列表
+        let userList = ref([]);
+
+        // 信息框
+        let text = ref("");
+
+        // 信息列表
+        let messages = ref([]);
+
+        // 信息
+        let message = {
+            name: "",
+            time: "",
+            msg: "",
+        };
+
+        // 发送信息
+        const sendButton = (event) => {
+            event.preventDefault();
+
+            if (text.value != null && text.value !== "" && nickname.value != null) {
+                message.name = nickname.value;
+                message.time = formatTime(new Date());
+                message.msg = text.value;
+                socket.send(JSON.stringify(message));
+                message.msg = "";
+                text.value = "";
+            }
+        };
+
+        return {
+            nickname,
+            userCount,
+            userList,
+            text,
+            messages,
+            sendButton
+        };
     }
-  };
-  </script>
-  
+}
+
+</script>
+
+
+<style lang="scss">
+@import "../../css/chat.scss";
+</style>

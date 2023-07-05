@@ -39,4 +39,18 @@ public class MqttController {
         mqttEnvService.controlSend(hexMes);
         return "success";
     }
+
+    @GetMapping("/api/controlMoterForeward")
+    public String controlMoterForeward() {
+        String hexMes = "03060000000149e8";
+        mqttEnvService.controlSend(hexMes);
+        return "success";
+    }
+
+    @GetMapping("/api/controlMoterBackward")
+    public String controlMoterBackward() {
+        String hexMes = "0306000100011828";
+        mqttEnvService.controlSend(hexMes);
+        return "success";
+    }
 }
