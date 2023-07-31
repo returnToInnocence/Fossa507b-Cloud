@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MqttConfig {
-    public static String broker = "tcp://124.222.87.124:1883";
-    public static String sendTopic = "lihongjun/subscribe";
-    public static String subscribeTopic = "lihongjun/send";
-    public static String username = "usrLi";
-    public static String password = "usrLi";
-    public static String clientid = "spring";
+    public static String broker = "xxx";
+    public static String sendTopic = "xxx";
+    public static String subscribeTopic = "xxx";
+    public static String username = "xxx";
+    public static String password = "xxx";
+    public static String clientid = "xxx";
     public static MqttClient client = null;
     public static int qos = 0;
     public static String getRecvData = null;
