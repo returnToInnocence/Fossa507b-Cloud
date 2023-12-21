@@ -4,10 +4,12 @@
 
 ![image-20230801034046303](readme.assets/image-20230801034046303.png)
 
+成员：阿悦、小李（本人）、老陈、小🐏，开开
+
 - 前端：`vue`
 
-- 后端：`springboot`整合`SSM`
+- 服务端：`springboot`整合`SSM`
 - `MQTT`消息服务器（`broker`）：`EMQX`
 - 数据库：`MySQL`
-- 硬件有线通信：`RS485`
+- 有线通信：`RS485`
 
